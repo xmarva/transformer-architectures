@@ -12,17 +12,13 @@ Transformers have revolutionized deep learning, particularly in natural language
 - **Scalability**: Transformers power state-of-the-art models like BERT, GPT, and ViTs, setting new benchmarks in AI.
 
 ## 📌 Work in Progress
-Here is a list of topics and implementations I am currently working on. Each item is a Jupyter Notebook dedicated to a specific aspect of transformers:
+Here is a list of topics and implementations I am currently working on. 
+Each item is a Jupyter Notebook dedicated to a specific aspect of transformers:
 
 - [ ] **Text Data Preprocessing** 
 - [ ] **Transformer Architecture**
-- [ ] **Training a Transformer on Real Data**
+- [ ] **Training a Transformer**
 - [ ] **Enhancing Transformer Architecture**
-- [ ] **BERT (Bidirectional Encoder Representations from Transformers)** 
-- [ ] **GPT (Generative Pretrained Transformer)**
-- [ ] **Vision Transformer (ViT)**
-- [ ] **CLIP (Contrastive Language–Image Pretraining)**
-- [ ] **Swin Transformer**
 
 ## 📚 Resources
 
