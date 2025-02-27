@@ -24,9 +24,9 @@ WORKDIR /transformer-architectures
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY docker-entrypoint.sh /usr/local/bin
-RUN chnod +x /usr/local/bin/docker-entrypoint.sh
-ENTRYPOINT [ "docker-entrypoint.sh" ]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh  # Правильная команда
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 # docker build -t transformer-gpu .
 # docker run -it --rm --gpus all --env-file .env -v $(pwd):/transformer-architectures transformer-gpu
