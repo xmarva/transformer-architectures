@@ -31,7 +31,7 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 # docker build -t transformer-gpu .
 # docker run -it --rm --gpus all --env-file .env -v $(pwd):/transformer-architectures transformer-gpu
-
 # docker run -it --rm --gpus all --env-file .env -v C:/Users/User/transformer-architectures:/transformer-architectures transformer-gpu
-
+# docker run -it --rm -p 8888:8888 --gpus all --env-file .env -v C:/Users/User/transformer-architectures:/transformer-architectures --entrypoint /bin/bash transformer-gpu -c "/usr/local/bin/docker-entrypoint.sh && exec /bin/bash"
 # python -c "import torch; print(torch.cuda.is_available())"
+# jupyter notebook --ip=0.0.0.0 --no-browser --allow-root
