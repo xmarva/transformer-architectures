@@ -24,8 +24,10 @@ WORKDIR /transformer-architectures
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["/bin/bash", "-c", "source /opt/venv/bin/activate && exec \"$@\"", "--"]
+COPY docker-entrypoint.sh /usr/local/bin
+RUN chnod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT [ "docker-entrypoint.sh" ]
 
 # docker build -t transformer-gpu .
-# docker run --gpus all -it -v $(pwd):/transformer-architectures transformer-gpu
+# docker run -it --rm --gpus all --env-file .env -v $(pwd):/transformer-architectures transformer-gpu
 # python -c "import torch; print(torch.cuda.is_available())"
