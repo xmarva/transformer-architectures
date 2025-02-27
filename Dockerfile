@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
 RUN python3 -m venv /opt/venv
 ENV PATH="opt/venv/bin:$PATH"
 
+RUN pip install --upgrade pip setuptools
+
 RUN pip install --no-cache-dir \ 
     torch==2.5.1+cu121 \
     --index-url https://download.pytorch.org/whl/cu121
@@ -17,7 +19,8 @@ RUN git clone https://github.com/xmarva/transformer-architectures.git
 WORKDIR /transformer-architectures
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
+RUN xargs -a requirements.txt -I{} pip install --no-cache-dir {}
 
 ENTRYPOINT ["/bin/bash"]
 
