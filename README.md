@@ -7,10 +7,10 @@ To deeply understand transformer architectures through practice—from implement
 ## Progress Checklist 🔍
 
 ### Basic Components  
-- [ ] **Tokenization**: BPE, HuggingFace Tokenizers—learn how text becomes numbers.  
-- [ ] **Transformer Architecture**: A clean-code implementation (no `import transformers` allowed).  
-- [ ] **Transformer Training**: Train a model on a simple translation task
-- [ ] **Experiment Tracking**: Integrate WandB/MLFlow—log metrics, weights, visualizations.  
+- [x] **Tokenization**: BPE, HuggingFace Tokenizers—learn how text becomes numbers.  
+- [x] **Transformer Architecture**: A clean-code implementation (no `import transformers` allowed).  
+- [x] **Transformer Training**: Train a model on a simple translation task
+- [x] **Experiment Tracking**: Integrate WandB/MLFlow—log metrics, weights, visualizations.  
 
 ### Enhancements & Optimization 🛠️  
 - [ ] **Architecture Enhancing**: Add FlashAttention, ALiBi, or other tweaks.  
