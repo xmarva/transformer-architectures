@@ -1,16 +1,22 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List
-from collections import Counter
+from dataclasses import dataclass
+from typing import List, Dict, Counter
 import re
 
+@dataclass
 class BaseTokenizer(ABC):
-    def __init__(self, special_tokens: List[str] = None):
-        self.special_tokens = special_tokens or ["<PAD>", "<UNK>", "<BOS>", "<EOS>"]
-        self._build_vocab()
+    language: str
+    vocab_size: int
+    special_tokens: List[str] = None
     
-    def _build_vocab(self) -> None:
-        self.token2id: Dict[str, int] = {t: i for i, t in enumerate(self.special_tokens)}
-        self.id2token: Dict[int, str] = {i: t for i, t in enumerate(self.special_tokens)}
+    def __post_init__(self):
+        self.special_tokens = self.special_tokens or ["<PAD>", "<UNK>", "<BOS>", "<EOS>"]
+        self.token2id: Dict[str, int] = {token: idx for idx, token in enumerate(self.special_tokens)}
+        self.id2token: Dict[int, str] = {idx: token for idx, token in enumerate(self.special_tokens)}
+    
+    def preprocess_text(self, text: str) -> List[str]:
+        tokens = re.findall(r"\w+[\w']*|['’][a-z]+|[^\w\s]", text.lower())
+        return tokens
     
     @abstractmethod
     def train(self, texts: List[str]) -> None:
@@ -20,8 +26,9 @@ class BaseTokenizer(ABC):
     def tokenize(self, text: str) -> List[int]:
         pass
     
-    def preprocess_text(self, text: str) -> List[str]:
-        return re.findall(r"\w+[\w']*|['’][a-z]+|[^\w\s]", text.lower())
-    
-    def get_stats(self, examples: List[str]) -> Counter:
-        return Counter(chain(*[self.preprocess_text(t) for t in examples]))
+    def get_stats(self, examples: List[str]) -> Counter[str]:
+        counter = Counter()
+        for text in examples:
+            tokens = self.preprocess_text(text)
+            counter.update(tokens)
+        return counter
