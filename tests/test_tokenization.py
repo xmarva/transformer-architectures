@@ -5,6 +5,7 @@ from src.data.tokenization.base import BaseTokenizer
 class TestBaseTokenizer:
     @patch.multiple(BaseTokenizer, __abstractmethods__=set())
     def test_initialization(self):
+        # This patch temporarily removes the abstract methods constraint
         tokenizer = BaseTokenizer(language='en', vocab_size=1000)
         assert tokenizer.token2id["<PAD>"] == 0
         assert tokenizer.id2token[1] == "<UNK>"
