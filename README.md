@@ -2,12 +2,12 @@
 
 To understand Transformer Architectures through practice—from implementing one from scratch to adapting pre-trained models (BERT, GPT). 
 
-| Notebook | Concepts |
-|---------|----------|
-| 1. **Tokenization [Prototype]** [Going Modular] | BPE, HuggingFace Tokenizers, Collator |
-| 2. **Transformer Architecture [Prototype]** [Going Modular] | Positional Encoding, Attention |
-| 3. **Functions and Tools [Prototype]** [Going Modular] | Translation functions, Architecture improvements, Weights and Biases |
-| 4. **Transformer Training [Prototype]** [Going Modular] | Training Loop |
+| Notebook | Concepts | Links |
+|---------|----------|-------|
+| 1. Tokenization and Encoding | BPE, HuggingFace Tokenizers, Collator | [Prototype] [Going Modular] |
+| 2. Transformer Architecture | Positional Encoding, Attention | [Prototype] [Going Modular] |
+| 3. Functions, Metrics, Tools | Translation, BLEU, ROGUE, METEOR, WandB | [Prototype] [Going Modular] |
+| 4. Transformer Training | Training, Evaluation, Scheduler, Xavier, LabelSmoothing | [Prototype] [Going Modular] |
 
 ---
 
