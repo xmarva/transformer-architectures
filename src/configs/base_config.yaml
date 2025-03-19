@@ -1,0 +1,12 @@
+collator_params:
+  max_length: 50
+pipeline_params:
+  batch_size: 16
+tokenizer_params:
+  src:
+    language: en
+    vocab_size: 1000
+  tgt:
+    language: ru
+    vocab_size: 1000
+tokenizer_type: bpe
