@@ -1,33 +1,29 @@
-# Transformer Playground 🧠⚡
+# Transformer Playground
 
-To deeply understand transformer architectures through practice—from implementing one from scratch to adapting pre-trained models (BERT, GPT). Why? Because transformers power nearly everything in modern ML, and the best way to learn is to get your hands dirty.  
+To understand Transformer Architectures through practice—from implementing one from scratch to adapting pre-trained models (BERT, GPT). 
+
+| Notebook | Concepts |
+|---------|----------|
+| 1. **Tokenization [Prototype]** [Going Modular] | BPE, HuggingFace Tokenizers, Collator |
+| 2. **Transformer Architecture [Prototype]** [Going Modular] | Positional Encoding, Attention |
+| 3. **Functions and Tools [Prototype]** [Going Modular] | Translation functions, Architecture improvements, Weights and Biases |
+| 4. **Transformer Training [Prototype]** [Going Modular] | Training Loop |
 
 ---
 
-## Progress Checklist 🔍
+## Progress
 
 ### Basic Components  
-- [x] **Tokenization**: BPE, HuggingFace Tokenizers—learn how text becomes numbers.  
-- [x] **Transformer Architecture**: A clean-code implementation (no `import transformers` allowed).  
-- [x] **Transformer Training**: Train a model on a simple translation task
-- [x] **Experiment Tracking**: Integrate WandB/MLFlow—log metrics, weights, visualizations.  
-
-### Enhancements & Optimization 🛠️  
-- [ ] **Architecture Enhancing**: Add FlashAttention, ALiBi, or other tweaks.  
-- [ ] **Optimization**: Mixed Precision, Gradient Checkpointing, etc 
-- [ ] **Adapters**: Implement and use adapters for fine-tuning.  
-- [ ] **Quantization**: Compress models without (major) quality loss.  
-
-### Working with Pretrained Models 🤖  
-- [ ] **BERT**: Use Hugging Face's pretrained BERT for classification/NER.  
-- [ ] **GPT**: Text generation with customization (prompt engineering, fine-tuning).  
-- [ ] **Visual Transformers**: Image classification with ViT.  
-- [ ] **CLIP**: Experiment with multimodal magic.  
+- [x] **Tokenization**
+- [x] **Transformer Architecture**  
+- [x] **Functions and Tools**
+- [x] **Transformer Training**
+- [ ] **Improvements and Experiments**
 
 ---
 
 ## Resources & References 📚  
-*List in progress.*  
+*List is coming soon.*  
 
 ---
 
