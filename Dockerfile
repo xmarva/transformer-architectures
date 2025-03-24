@@ -23,10 +23,6 @@ RUN apt-get install -y \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
-    torch==${TORCH_VERSION} \
-    --index-url ${TORCH_INDEX_URL}
-
 RUN python3.10 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
