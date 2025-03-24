@@ -24,7 +24,7 @@ RUN apt-get install -y \
 RUN python3.10 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip install --no-cache-dir --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 ARG TORCH_VERSION=2.5.1+cu121
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121
@@ -39,11 +39,11 @@ WORKDIR /transformer-architectures
 COPY requirements.txt .
 
 RUN if [ "$TARGET" = "ci" ]; then \
-    pip install --no-cache-dir -v GPUtil==1.4.0 || ( \
     git clone https://github.com/anderskm/gputil.git /tmp/gputil && \
-    sed -i 's/description-file/description_file/g' /tmp/gputil/setup.cfg && \
-    pip install --no-cache-dir /tmp/gputil \
-    ); \
+    cd /tmp/gputil && \
+    sed -i 's/description-file/description_file/g' setup.cfg && \
+    pip install --no-cache-dir . && \
+    cd - ; \
     fi
 
 RUN pip install --no-cache-dir -r requirements.txt
@@ -53,8 +53,3 @@ RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-
-# docker build -t transformer-gpu .
-# docker run -it --rm -p 8888:8888 --gpus all --env-file .env -v C:/Users/User/transformer-architectures:/transformer-architectures --entrypoint /bin/bash transformer-gpu -c "/usr/local/bin/docker-entrypoint.sh && exec /bin/bash"
-# python -c "import torch; print(torch.cuda.is_available())"
-# jupyter notebook --ip=0.0.0.0 --no-browser --allow-root

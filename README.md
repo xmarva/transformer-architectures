@@ -5,9 +5,9 @@ To understand Transformer Architectures through practice—from implementing one
 | Notebook | Concepts | Links |
 |--------|----------|-------|
 | 1. Tokenization and Encoding | BPE, HuggingFace Tokenizers, Collator | [Prototype](https://www.kaggle.com/code/qmarva/bpe-tokenization) <br> [Going Modular] |
-| 2. Transformer Architecture | Positional Encoding, Attention | [Prototype](https://www.kaggle.com/code/qmarva/building-transformer) <br> [Going Modular] |
-| 3. Functions, Metrics, Tools | Translation, BLEU, ROGUE, METEOR, WandB | [Prototype] <br> [Going Modular] |
-| 4. Transformer Training | Training, Evaluation, Scheduler, Xavier, LabelSmoothing | [Prototype] <br> [Going Modular] |
+| 2. Transformer Architecture | Positional Encoding, KQV Attention | [Prototype](https://www.kaggle.com/code/qmarva/building-transformer) <br> [Going Modular] |
+| 3. Functions, Metrics, Tools | BLEU, ROGUE, METEOR, WandB | [Prototype] <br> [Going Modular] |
+| 4. Transformer Training | LR Scheduler, Xavier Initialization, LabelSmoothing | [Prototype] <br> [Going Modular] |
 
 ---
 
@@ -36,7 +36,7 @@ To understand Transformer Architectures through practice—from implementing one
 | XLNet: Generalized Autoregressive Pretraining for Language Understanding | XLNet                                  | [arXiv:1906.08237](https://arxiv.org/abs/1906.08237)          |
 | Vision Transformer (ViT): An Image is Worth 16x16 Words       | Vision Transformer (ViT)                | [arXiv:2010.11929](https://arxiv.org/abs/2010.11929)          |
 | DEBERTA: Decoding-enhanced BERT with Disentangled Attention   | DeBERTa                                 | [arXiv:2006.03654](https://arxiv.org/abs/2006.03654)          |
-| Efficient Transformers: A Survey                            | Общий обзор трансформеров и их эффективности | [arXiv:2009.06732](https://arxiv.org/abs/2009.06732)          |
+| Efficient Transformers: A Survey                            | Transformer Efficiency Survey | [arXiv:2009.06732](https://arxiv.org/abs/2009.06732)          |
 | Reformer: The Efficient Transformer                          | Reformer                                | [arXiv:2001.04451](https://arxiv.org/abs/2001.04451)          |
 | Linformer: Self-Attention with Linear Complexity              | Linformer                               | [arXiv:2006.04768](https://arxiv.org/abs/2006.04768)          |
 | Longformer: The Long-Document Transformer                    | Longformer                              | [arXiv:2004.05150](https://arxiv.org/abs/2004.05150)          |
