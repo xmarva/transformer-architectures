@@ -39,10 +39,11 @@ WORKDIR /transformer-architectures
 COPY requirements.txt .
 
 RUN if [ "$TARGET" = "ci" ]; then \
+    sed -i '/GPUtil/d' requirements.txt && \
     git clone https://github.com/anderskm/gputil.git /tmp/gputil && \
     cd /tmp/gputil && \
     sed -i 's/description-file/description_file/g' setup.cfg && \
-    pip install --no-cache-dir . && \
+    python3 setup.py install && \
     cd - ; \
     fi
 
@@ -53,3 +54,8 @@ RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
+
+# docker build -t transformer-gpu .
+# docker run -it --rm -p 8888:8888 --gpus all --env-file .env -v C:/Users/User/transformer-architectures:/transformer-architectures --entrypoint /bin/bash transformer-gpu -c "/usr/local/bin/docker-entrypoint.sh && exec /bin/bash"
+# python -c "import torch; print(torch.cuda.is_available())"
+# jupyter notebook --ip=0.0.0.0 --no-browser --allow-root
