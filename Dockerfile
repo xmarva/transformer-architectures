@@ -1,4 +1,8 @@
-FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda12.6-devel-ubuntu24.04
+ARG CUDA_VERSION=12.6
+ARG TORCH_VERSION=2.5.1+cu121
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121
+
+FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda${CUDA_VERSION}-devel-ubuntu24.04
 
 RUN apt-get update && apt-get install -y \
     software-properties-common \
@@ -18,6 +22,10 @@ RUN apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+    torch==${TORCH_VERSION} \
+    --index-url ${TORCH_INDEX_URL}
 
 RUN python3.10 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
