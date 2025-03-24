@@ -1,5 +1,4 @@
 name: CI Tests
-
 on:
   push:
     branches: [main]
@@ -9,20 +8,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Build CPU image
-      run: |
-        docker build \
-          --target ci \
-          --build-arg TORCH_VERSION=2.5.1+cpu \
-          --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu \
-          -t transformer-ci .
+      - name: Build CPU image
+        run: |
+          docker build \
+            --target ci \
+            --build-arg TARGET=ci \
+            --build-arg TORCH_VERSION=2.5.1+cpu \
+            --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu \
+            -t transformer-ci .
 
-    - name: Run tests
-      run: |
-        docker run --rm transformer-ci \
-        pytest -m "not gpu" /transformer-architectures/tests
+      - name: Run tests
+        run: |
+          docker run --rm transformer-ci \
+            pytest -m "not gpu" /transformer-architectures/tests

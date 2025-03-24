@@ -1,6 +1,5 @@
 ARG TARGET=production
 FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda12.6-devel-ubuntu24.04 as production
-
 FROM ubuntu:24.04 as ci
 
 RUN apt-get update && apt-get install -y \
@@ -27,21 +26,24 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --no-cache-dir --upgrade pip setuptools
 
+ARG TORCH_VERSION=2.5.1+cu121
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121
+
 RUN pip install --no-cache-dir \
-    torch==2.5.1+cu121 \
-    --index-url https://download.pytorch.org/whl/cu121
+    torch==${TORCH_VERSION} \
+    --index-url ${TORCH_INDEX_URL}
 
 RUN git clone https://github.com/xmarva/transformer-architectures.git
 WORKDIR /transformer-architectures
+
 COPY requirements.txt .
 
-ARG TARGET
 RUN if [ "$TARGET" = "ci" ]; then \
-        pip install --no-cache-dir -v GPUtil==1.4.0 || ( \
-            git clone https://github.com/anderskm/gputil.git /tmp/gputil && \
-            sed -i 's/description-file/description_file/g' /tmp/gputil/setup.cfg && \
-            pip install --no-cache-dir /tmp/gputil \
-        ); \
+    pip install --no-cache-dir -v GPUtil==1.4.0 || ( \
+    git clone https://github.com/anderskm/gputil.git /tmp/gputil && \
+    sed -i 's/description-file/description_file/g' /tmp/gputil/setup.cfg && \
+    pip install --no-cache-dir /tmp/gputil \
+    ); \
     fi
 
 RUN pip install --no-cache-dir -r requirements.txt
@@ -49,6 +51,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # docker build -t transformer-gpu .
