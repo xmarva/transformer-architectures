@@ -2,4 +2,6 @@
 .env
 *.secret
 *.env
+*.pyc
+*.__pycache__
 docker-entrypoint.sh
