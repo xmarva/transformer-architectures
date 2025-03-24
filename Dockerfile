@@ -1,5 +1,4 @@
 ARG TARGET=production
-
 FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda12.6-devel-ubuntu24.04 as production
 
 FROM ubuntu:24.04 as ci
@@ -35,6 +34,16 @@ RUN pip install --no-cache-dir \
 RUN git clone https://github.com/xmarva/transformer-architectures.git
 WORKDIR /transformer-architectures
 COPY requirements.txt .
+
+ARG TARGET
+RUN if [ "$TARGET" = "ci" ]; then \
+        pip install --no-cache-dir -v GPUtil==1.4.0 || ( \
+            git clone https://github.com/anderskm/gputil.git /tmp/gputil && \
+            sed -i 's/description-file/description_file/g' /tmp/gputil/setup.cfg && \
+            pip install --no-cache-dir /tmp/gputil \
+        ); \
+    fi
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY docker-entrypoint.sh /usr/local/bin/
