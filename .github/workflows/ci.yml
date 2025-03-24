@@ -14,13 +14,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
     - name: Build CPU image
       run: |
         docker build \
-          --build-arg CUDA_VERSION="" \
+          --target ci \
           --build-arg TORCH_VERSION=2.5.1+cpu \
           --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu \
           -t transformer-ci .
@@ -28,4 +25,4 @@ jobs:
     - name: Run tests
       run: |
         docker run --rm transformer-ci \
-          pytest -m "not gpu" /transformer-architectures/tests
+        pytest -m "not gpu" /transformer-architectures/tests

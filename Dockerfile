@@ -1,8 +1,8 @@
-ARG CUDA_VERSION=12.6
-ARG TORCH_VERSION=2.5.1+cu121
-ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121
+ARG TARGET=production
 
-FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda${CUDA_VERSION}-devel-ubuntu24.04
+FROM nvcr.io/nvidia/cuda-dl-base:24.12-cuda12.6-devel-ubuntu24.04 as production
+
+FROM ubuntu:24.04 as ci
 
 RUN apt-get update && apt-get install -y \
     software-properties-common \
