@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import altair as alt
-import numpy ans np
 alt.data_transformers.disable_max_rows()
 
 class PositionalEncoding(nn.Module):
