@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import altair as alt
+import numpy ans np
 alt.data_transformers.disable_max_rows()
 
 class PositionalEncoding(nn.Module):
@@ -144,3 +145,88 @@ class Transformer(nn.Module):
         
         output = self.fc_out(dec_output)
         return output
+    
+def test_transformer():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"Using device: {device}")
+    
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(42)
+    torch.manual_seed(42)
+    
+    batch_size = 2
+    seq_len = 10
+    d_model = 512
+    num_heads = 8
+    src_vocab_size = 100
+    tgt_vocab_size = 100
+    num_layers = 2
+
+    src = torch.randint(0, src_vocab_size, (batch_size, seq_len)).to(device)
+    tgt = torch.randint(0, tgt_vocab_size, (batch_size, seq_len)).to(device)
+    
+    src_mask = torch.ones(batch_size, 1, 1, seq_len).to(device)
+    tgt_mask = torch.tril(torch.ones(seq_len, seq_len)).expand(batch_size, 1, seq_len, seq_len).to(device)
+
+    transformer = Transformer(
+        src_vocab_size=src_vocab_size,
+        tgt_vocab_size=tgt_vocab_size,
+        d_model=d_model,
+        num_heads=num_heads,
+        num_layers=num_layers
+    ).to(device)
+
+    print("="*50)
+    print("1. Тест Positional Encoding")
+    pe = PositionalEncoding(d_model, dropout=0.1).to(device)
+    x = torch.randn(1, seq_len, d_model).to(device)
+    print(f"До PE: mean={x.mean().item():.4f}, std={x.std().item():.4f}")
+    x_pe = pe(x)
+    print(f"После PE: mean={x_pe.mean().item():.4f}, std={x_pe.std().item():.4f}")
+    print(f"Форма PE: {x_pe.shape} (должна быть [1, {seq_len}, {d_model}])")
+    
+    print("\n2. Тест Multi-Head Attention")
+    mha = MultiHeadAttention(d_model, num_heads).to(device)
+    q = k = v = torch.randn(batch_size, seq_len, d_model).to(device)
+    attn_output = mha(q, k, v)
+    print(f"Форма выхода внимания: {attn_output.shape} (должна быть {q.shape})")
+    print(f"Максимальное значение: {attn_output.max().item():.4f}")
+    print(f"Минимальное значение: {attn_output.min().item():.4f}")
+
+    print("\n3. Тест Encoder Layer")
+    encoder_layer = EncoderLayer(d_model, num_heads).to(device)
+    enc_input = torch.randn(batch_size, seq_len, d_model).to(device)
+    enc_output = encoder_layer(enc_input)
+    print(f"Форма выхода энкодера: {enc_output.shape} (должна быть {enc_input.shape})")
+    print(f"Изменение данных: {torch.allclose(enc_input, enc_output, atol=1e-4)} (должно быть False)")
+
+    print("\n4. Тест Decoder Layer")
+    decoder_layer = DecoderLayer(d_model, num_heads).to(device)
+    dec_input = torch.randn(batch_size, seq_len, d_model).to(device)
+    dec_output = decoder_layer(dec_input, enc_output, src_mask, tgt_mask)
+    print(f"Форма выхода декодера: {dec_output.shape} (должна быть {dec_input.shape})")
+    print(f"Норма выходных данных: {dec_output.norm().item():.4f}")
+
+    print("\n5. Полный тест Transformer")
+    print("Входные данные:")
+    print(f"src: {src.shape} (max={src.max().item()}, min={src.min().item()})")
+    print(f"tgt: {tgt.shape} (max={tgt.max().item()}, min={tgt.min().item()})")
+    
+    output = transformer(src, tgt, src_mask, tgt_mask)
+    print("\nПроверка формы выхода:")
+    print(f"Ожидаемая форма: ({batch_size}, {seq_len}, {tgt_vocab_size})")
+    print(f"Реальная форма:   {output.shape}")
+    
+    print("\nПроверка градиентов:")
+    dummy_loss = output.sum()
+    dummy_loss.backward()
+    has_gradients = any(p.grad is not None for p in transformer.parameters())
+    print(f"Градиенты вычислены: {has_gradients} (должно быть True)")
+
+    print("\n6. Проверка параметров модели:")
+    total_params = sum(p.numel() for p in transformer.parameters())
+    print(f"Всего параметров: {total_params}")
+    print(f"Параметры энкодера: {sum(p.numel() for p in transformer.encoder_embedding.parameters())}")
+    print(f"Параметры декодера: {sum(p.numel() for p in transformer.decoder_embedding.parameters())}")
+
+    print("\nТест завершен!")
