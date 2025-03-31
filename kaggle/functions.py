@@ -584,3 +584,15 @@ def prepare_dataset(subset_size, tokenizer):
     
     return train_dataset, val_dataset, test_dataset, tokenizer
 
+def create_data_loaders(train_dataset, val_dataset, test_dataset, batch_size):
+    train_loader = DataLoader(
+        train_dataset, 
+        batch_size=batch_size, 
+        shuffle=True,
+        num_workers=2,
+        pin_memory=True
+    )
+    val_loader = DataLoader(val_dataset, batch_size=batch_size)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size)
+    
+    return train_loader, val_loader, test_loader
