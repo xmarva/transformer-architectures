@@ -564,3 +564,23 @@ def evaluate_model(model, val_loader, criterion, tokenizer, device, max_examples
         all_targets[:max_examples],
         all_predictions[:max_examples]
     )
+
+def prepare_dataset(subset_size, tokenizer):
+    dataset = load_translation_dataset()
+    processed_data, tokenizer = prepare_data_with_hf(dataset)
+    full_dataset = TranslationDataset(processed_data)
+    
+    indices = range(min(subset_size, len(full_dataset)))
+    subset = Subset(full_dataset, indices)
+    
+    train_size = int(0.7 * len(subset))
+    val_size = int(0.15 * len(subset))
+    test_size = len(subset) - train_size - val_size
+    
+    train_dataset, val_dataset, test_dataset = random_split(
+        subset, [train_size, val_size, test_size],
+        generator=torch.Generator().manual_seed(42)
+    )
+    
+    return train_dataset, val_dataset, test_dataset, tokenizer
+
