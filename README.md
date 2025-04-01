@@ -36,7 +36,6 @@ To understand Transformer Architectures through practice—from implementing one
 | Rethinking the Inception Architecture for Computer Vision                 | Label Smoothing                    | [arXiv:1512.00567](https://arxiv.org/abs/1512.00567)                     |
 | Practical Bayesian Optimization of Machine Learning Algorithms            | Hyperparameter Tuning              | [arXiv:1206.2944](https://arxiv.org/abs/1206.2944)                       |
 | Beam Search Strategies for Neural Machine Translation                     | Beam Search Decoding               | [arXiv:1702.01806](https://arxiv.org/abs/1702.01806)                     |
-| Blockwise Parallel Decoding for Deep Autoregressive Models                | Parallel Decoding                  | [arXiv:1811.00615](https://arxiv.org/abs/1811.00615)                     |
 | Efficient Transformers: A Survey                                          | Memory Optimization Techniques      | [arXiv:2009.06732](https://arxiv.org/abs/2009.06732)                     |
 
 **Note**: This is a living project—code and structure may evolve.
