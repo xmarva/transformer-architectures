@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoTokenizer
+
 
 def translate_sentence(model, tokenizer, sentence, device, max_length=128):
     model.eval()
@@ -23,7 +23,7 @@ def translate_sentence(model, tokenizer, sentence, device, max_length=128):
                 inputs['input_ids'],
                 decoder_input,
                 src_mask,
-                tgt_mask.unsqueeze(0).unsqueeze(0)
+                tgt_mask.unsqueeze(0).unsqueeze(0))
             
             next_token = output[:, -1].argmax(-1)
             decoder_input = torch.cat([decoder_input, next_token.unsqueeze(1)], dim=1)
