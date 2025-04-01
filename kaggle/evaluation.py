@@ -1,5 +1,6 @@
 import torch
-from torch.utils.data import DataLoader
+from metrics import calculate_metrics
+from translation import translate_sentence
 
 def evaluate_model(model, val_loader, criterion, tokenizer, device, max_examples=10):
     model.eval()

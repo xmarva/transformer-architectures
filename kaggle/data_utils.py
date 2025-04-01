@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Subset, random_split
-from dataset import TranslationDataset
+from my_dataset import TranslationDataset
 from data_preparation import load_translation_dataset, prepare_data_with_hf
 
 def prepare_dataset(subset_size, tokenizer):

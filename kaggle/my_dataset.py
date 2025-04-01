@@ -1,5 +1,5 @@
-from torch.utils.data import Dataset
 import torch
+from torch.utils.data import Dataset
 
 class TranslationDataset(Dataset):
     def __init__(self, processed_data):
