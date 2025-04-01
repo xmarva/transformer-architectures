@@ -1,12 +1,11 @@
 import torch
 from transformers import AutoTokenizer
-from torch.utils.data import Dataset, DataLoader, Subset, random_split
-from datasets import load_dataset
-import numpy as np
+from .architecture import MultiHeadAttention, Transformer
+from .data_utils import translate_sentence
 
 def test_tokenization(tokenizer, test_sentence="Hello, how are you?"):
     print("="*50)
-    print("1. Тестирование токенизации и специальных токенов")
+    print("1. Testing tokenization and special tokens")
     
     print(f"BOS: {tokenizer.bos_token} (id: {tokenizer.bos_token_id})")
     print(f"EOS: {tokenizer.eos_token} (id: {tokenizer.eos_token_id})")
@@ -17,7 +16,7 @@ def test_tokenization(tokenizer, test_sentence="Hello, how are you?"):
         processed_text,
         padding='max_length',
         truncation=True,
-        max_length=20,
+        max_length=20, 
         return_tensors='pt',
         add_special_tokens=False
     )
@@ -25,23 +24,23 @@ def test_tokenization(tokenizer, test_sentence="Hello, how are you?"):
     token_ids = encoded['input_ids'][0].tolist()
     decoded = tokenizer.decode(token_ids)
     
-    print("\nПример токенизации:")
-    print(f"Токены: {token_ids}")
-    print(f"Декодировано: {decoded}")
+    print("\nTokenization example:")
+    print(f"Tokens: {token_ids}")
+    print(f"Decoded: {decoded}")
     
     try:
         eos_pos = token_ids.index(tokenizer.eos_token_id)
         pad_start = token_ids.index(tokenizer.pad_token_id)
-        assert eos_pos < pad_start, "EOS должен быть перед паддингом"
+        assert eos_pos < pad_start, "EOS should be before padding"
     except ValueError:
         assert False, "EOS token not found"
     
     assert token_ids[0] == tokenizer.bos_token_id
-    print("\n✅ Токенизация работает корректно")
+    print("\nTokenization is working correctly")
 
 def test_masking():
     print("\n" + "="*50)
-    print("2. Тестирование создания масок")
+    print("2. Testing mask generation")
     
     batch_size = 2
     seq_len = 5
@@ -55,20 +54,21 @@ def test_masking():
     causal_mask = torch.tril(torch.ones(seq_len, seq_len, device=device))
     tgt_mask = causal_mask.unsqueeze(0).repeat(batch_size, 1, 1, 1)
     
-    print("\nSource mask (пример):")
+    print("\nSource mask (example):")
     print(src_mask[0, 0, 0].cpu().numpy()) 
     
-    print("\nTarget mask (пример):")
+    print("\nTarget mask (example):")
     print(tgt_mask[0, 0].cpu().numpy())
     
-    assert src_mask.shape == (batch_size, 1, 1, seq_len), f"Ожидалось (2,1,1,5), получено {src_mask.shape}"
-    assert tgt_mask.shape == (batch_size, 1, seq_len, seq_len), f"Ожидалось (2,1,5,5), получено {tgt_mask.shape}"
+    # Check dimensions
+    assert src_mask.shape == (batch_size, 1, 1, seq_len), f"Expected (2,1,1,5), got {src_mask.shape}"
+    assert tgt_mask.shape == (batch_size, 1, seq_len, seq_len), f"Expected (2,1,5,5), got {tgt_mask.shape}"
     
-    print("\n✅ Маски создаются корректно")
+    print("\nMasks are created correctly")
 
 def test_model_forward_pass(model, tokenizer, device):
     print("\n" + "="*50)
-    print("3. Тестирование forward pass модели")
+    print("3. Testing model forward pass")
     
     test_sentence = "Test input"
     inputs = tokenizer(
@@ -94,20 +94,20 @@ def test_model_forward_pass(model, tokenizer, device):
     with torch.no_grad():
         output = model(src, tgt, src_mask, tgt_mask)
     
-    print("\nФорма выходов модели:", output.shape)
-    print("Минимальное значение:", output.min().item())
-    print("Максимальное значение:", output.max().item())
+    print("\nModel output shape:", output.shape)
+    print("Minimum value:", output.min().item())
+    print("Maximum value:", output.max().item())
     
     assert not torch.isnan(output).any()
-    expected_vocab_size = len(tokenizer)
+    expected_vocab_size = len(tokenizer)  # Use the actual vocabulary size
     assert output.shape == (1, 128, expected_vocab_size), (
-        f"Ожидаемая форма: (1, 128, {expected_vocab_size}), "
-        f"получено: {output.shape}"
+        f"Expected shape: (1, 128, {expected_vocab_size}), "
+        f"got: {output.shape}"
     )
-    print("\n✅ Forward pass работает корректно")
+    print("\nForward pass is working correctly")
 
 def test_dynamic_masking():
-    print("Тестирование динамических масок для разных размеров")
+    print("Testing dynamic masks for different sizes")
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     num_heads = 8
@@ -120,7 +120,7 @@ def test_dynamic_masking():
     ]
     
     for case in test_cases:
-        print(f"\nТест для batch={case['batch_size']} seq_len={case['seq_len']}")
+        print(f"\nTest for batch={case['batch_size']} seq_len={case['seq_len']}")
         
         src = torch.randint(0, 100, (case['batch_size'], case['seq_len'])).to(device)
         tgt = torch.randint(0, 100, (case['batch_size'], case['seq_len'])).to(device)
@@ -135,13 +135,13 @@ def test_dynamic_masking():
         try:
             output = mha(q, k, v, tgt_mask)
             assert output.shape == (case['batch_size'], case['seq_len'], d_model)
-            print("✅ Успех")
+            print("Success")
         except Exception as e:
-            print(f"❌ Ошибка: {str(e)}")
+            print(f"Error: {str(e)}")
             raise
 
 def test_multi_head_compatibility():
-    print("\nТестирование совместимости масок с Multi-Head Attention")
+    print("\nTesting mask compatibility with Multi-Head Attention")
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     d_model = 512
@@ -160,14 +160,14 @@ def test_multi_head_compatibility():
             try:
                 output = mha(q, q, q, mask)
                 assert output.shape == q.shape
-                print("✅ Совместимость подтверждена")
+                print("Compatibility confirmed")
             except Exception as e:
-                print(f"❌ Несовместимость: {str(e)}")
+                print(f"Incompatibility: {str(e)}")
                 raise
 
 def test_translation_function(model, tokenizer, device):
     print("\n" + "="*50)
-    print("4. Тестирование функции перевода")
+    print("4. Testing translation function")
     
     test_sentences = [
         "Hello world",
@@ -178,7 +178,7 @@ def test_translation_function(model, tokenizer, device):
     
     for sentence in test_sentences:
         print("\n" + "-"*50)
-        print(f"Перевод: '{sentence}'")
+        print(f"Translation: '{sentence}'")
         
         try:
             translated = translate_sentence(
@@ -186,17 +186,17 @@ def test_translation_function(model, tokenizer, device):
                 tokenizer=tokenizer,
                 sentence=sentence,
                 device=device,
-                max_length=64
+                max_length=64  # Reduced length for tests
             )
-            print(f"Результат: {translated}")
+            print(f"Result: {translated}")
         except Exception as e:
-            print(f"Ошибка: {str(e)}")
+            print(f"Error: {str(e)}")
             raise
     
-    print("\n✅ Функция перевода работает корректно")
+    print("\nTranslation function is working correctly")
 
 def test_model_with_various_inputs():
-    print("\nТестирование модели с различными входными размерами")
+    print("\nTesting the model with various input sizes")
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
@@ -207,7 +207,7 @@ def test_model_with_various_inputs():
             'pad_token': '<pad>', 'unk_token': '<unk>'
         })
     except Exception as e:
-        print(f"Ошибка инициализации токенизатора: {e}")
+        print(f"Tokenizer initialization error: {e}")
         raise
     
     d_model = 512
@@ -231,7 +231,7 @@ def test_model_with_various_inputs():
     ]
     
     for case in test_cases:
-        print(f"\nТест: batch={case['batch_size']} src={case['src_len']} tgt={case['tgt_len']}")
+        print(f"\nTest: batch={case['batch_size']} src={case['src_len']} tgt={case['tgt_len']}")
         
         try:
             src = torch.randint(0, len(tokenizer), 
@@ -254,10 +254,10 @@ def test_model_with_various_inputs():
                 len(tokenizer)
             )
             assert output.shape == expected_shape
-            print("✅ Корректная работа")
+            print("Working correctly")
             
         except Exception as e:
-            print(f"❌ Ошибка: {str(e)}")
+            print(f"Error: {str(e)}")
             raise
 
 def run_comprehensive_tests():
