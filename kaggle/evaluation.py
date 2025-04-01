@@ -1,6 +1,6 @@
 import torch
-from metrics import calculate_metrics
-from translation import translate_sentence
+from .metrics import calculate_metrics
+from .translation import translate_sentence
 
 def evaluate_model(model, val_loader, criterion, tokenizer, device, max_examples=10):
     model.eval()
