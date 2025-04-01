@@ -2,14 +2,13 @@
 
 To understand Transformer Architectures through practice—from implementing one from scratch to adapting pre-trained models (BERT, GPT). 
 
-| Notebook | Concepts | Links |
-|--------|----------|-------|
-| 1. Tokenization and Encoding | BPE, HuggingFace Tokenizers, Collator | [Prototype](https://www.kaggle.com/code/qmarva/bpe-tokenization) <br> [Going Modular] |
-| 2. Transformer Architecture | Positional Encoding, Attention(KQV, Multi-Head), Encoder-Decoder | [Prototype](https://www.kaggle.com/code/qmarva/building-transformer) <br> [Going Modular] |
-| 3. Functions, Metrics, Tools | BLEU, ROGUE, METEOR, WandB | [Prototype] <br> [Going Modular] |
-| 4. Transformer Training | LR Scheduler, Xavier Initialization, LabelSmoothing, Hyperparameter Tuning | [Prototype] <br> [Going Modular] |
-
----
+| Notebook | Concepts | English | Russian |
+|----------|----------|---------|---------|
+| 1. Tokenization and Encoding | BPE, HuggingFace Tokenizers, Collator | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/code/qmarva/bpe-tokenization) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) |
+| 2. Transformer Architecture | Positional Encoding, Attention(KQV, Multi-Head), Encoder-Decoder | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/code/qmarva/building-transformer) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) |
+| 3. Functions, Metrics, Tools | BLEU, ROGUE, METEOR, WandB | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) |
+| 4. Transformer Training | LR Scheduler, Xavier Initialization, LabelSmoothing, Hyperparameter Tuning | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) |
+| 5. Complete Transformer | End-to-End Implementation | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) | [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](#) <br> [![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)](#) |
 
 
 ## Progress
@@ -24,24 +23,20 @@ To understand Transformer Architectures through practice—from implementing one
 ---
 
 ## Resources & References 📚  
-| **Paper**                                          | **Architecture**                | **Link**                                                   |
-|--------------------------------------------------------------|-----------------------------------------|--------------------------------------------------------------|
-| Attention is All You Need                                    | Transformer                              | [arXiv:1706.03762](https://arxiv.org/abs/1706.03762)          |
-| BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding | BERT (Bidirectional Encoder Representations from Transformers) | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805)          |
-| GPT-3: Language Models are Few-Shot Learners                  | GPT-3 (Generative Pre-trained Transformer 3) | [arXiv:2005.14165](https://arxiv.org/abs/2005.14165)          |
-| T5: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer | T5 (Text-to-Text Transfer Transformer)   | [arXiv:1910.10683](https://arxiv.org/abs/1910.10683)          |
-| Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context | Transformer-XL                          | [arXiv:1901.02860](https://arxiv.org/abs/1901.02860)          |
-| RoBERTa: A Robustly Optimized BERT Pretraining Approach       | RoBERTa                                 | [arXiv:1907.11692](https://arxiv.org/abs/1907.11692)          |
-| ALBERT: A Lite BERT for Self-supervised Learning of Language Representations | ALBERT (A Lite BERT)                   | [arXiv:1909.11942](https://arxiv.org/abs/1909.11942)          |
-| XLNet: Generalized Autoregressive Pretraining for Language Understanding | XLNet                                  | [arXiv:1906.08237](https://arxiv.org/abs/1906.08237)          |
-| Vision Transformer (ViT): An Image is Worth 16x16 Words       | Vision Transformer (ViT)                | [arXiv:2010.11929](https://arxiv.org/abs/2010.11929)          |
-| DEBERTA: Decoding-enhanced BERT with Disentangled Attention   | DeBERTa                                 | [arXiv:2006.03654](https://arxiv.org/abs/2006.03654)          |
-| Efficient Transformers: A Survey                            | Transformer Efficiency Survey | [arXiv:2009.06732](https://arxiv.org/abs/2009.06732)          |
-| Reformer: The Efficient Transformer                          | Reformer                                | [arXiv:2001.04451](https://arxiv.org/abs/2001.04451)          |
-| Linformer: Self-Attention with Linear Complexity              | Linformer                               | [arXiv:2006.04768](https://arxiv.org/abs/2006.04768)          |
-| Longformer: The Long-Document Transformer                    | Longformer                              | [arXiv:2004.05150](https://arxiv.org/abs/2004.05150)          |
-
-
----
+| **Paper**                                                                 | **Component/Method**               | **Link**                                                                 |
+|:-------------------------------------------------------------------------|:-----------------------------------|:-------------------------------------------------------------------------|
+| Attention is All You Need                                                 | Transformer Architecture           | [arXiv:1706.03762](https://arxiv.org/abs/1706.03762)                     |
+| Neural Machine Translation of Rare Words with Subword Units               | Byte-Pair Encoding (BPE)           | [arXiv:1508.07909](https://arxiv.org/abs/1508.07909)                     |
+| SentencePiece: A Simple Language-Independent Subword Tokenizer            | SentencePiece Tokenizer            | [arXiv:1808.06226](https://arxiv.org/abs/1808.06226)                     |
+| Layer Normalization                                                       | Layer Normalization                | [arXiv:1607.06450](https://arxiv.org/abs/1607.06450)                     |
+| Adam: A Method for Stochastic Optimization                                | Adam Optimizer                     | [arXiv:1412.6980](https://arxiv.org/abs/1412.6980)                       |
+| SGDR: Stochastic Gradient Descent with Warm Restarts                      | Cosine Learning Rate Scheduler     | [arXiv:1608.03983](https://arxiv.org/abs/1608.03983)                     |
+| Decoupled Weight Decay Regularization                                     | AdamW Optimizer                    | [arXiv:1711.05101](https://arxiv.org/abs/1711.05101)                     |
+| Understanding the Difficulty of Training Deep Feedforward Neural Networks | Xavier/Glorot Initialization       | [PMLR 9:249-256](http://proceedings.mlr.press/v9/glorot10a)              |
+| Rethinking the Inception Architecture for Computer Vision                 | Label Smoothing                    | [arXiv:1512.00567](https://arxiv.org/abs/1512.00567)                     |
+| Practical Bayesian Optimization of Machine Learning Algorithms            | Hyperparameter Tuning              | [arXiv:1206.2944](https://arxiv.org/abs/1206.2944)                       |
+| Beam Search Strategies for Neural Machine Translation                     | Beam Search Decoding               | [arXiv:1702.01806](https://arxiv.org/abs/1702.01806)                     |
+| Blockwise Parallel Decoding for Deep Autoregressive Models                | Parallel Decoding                  | [arXiv:1811.00615](https://arxiv.org/abs/1811.00615)                     |
+| Efficient Transformers: A Survey                                          | Memory Optimization Techniques      | [arXiv:2009.06732](https://arxiv.org/abs/2009.06732)                     |
 
 **Note**: This is a living project—code and structure may evolve.
