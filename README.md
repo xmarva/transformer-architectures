@@ -5,9 +5,9 @@ To understand Transformer Architectures through practice—from implementing one
 | Notebook | Concepts | Links |
 |--------|----------|-------|
 | 1. Tokenization and Encoding | BPE, HuggingFace Tokenizers, Collator | [Prototype](https://www.kaggle.com/code/qmarva/bpe-tokenization) <br> [Going Modular] |
-| 2. Transformer Architecture | Positional Encoding, KQV Attention | [Prototype](https://www.kaggle.com/code/qmarva/building-transformer) <br> [Going Modular] |
+| 2. Transformer Architecture | Positional Encoding, Attention(KQV, Multi-Head), Encoder-Decoder | [Prototype](https://www.kaggle.com/code/qmarva/building-transformer) <br> [Going Modular] |
 | 3. Functions, Metrics, Tools | BLEU, ROGUE, METEOR, WandB | [Prototype] <br> [Going Modular] |
-| 4. Transformer Training | LR Scheduler, Xavier Initialization, LabelSmoothing | [Prototype] <br> [Going Modular] |
+| 4. Transformer Training | LR Scheduler, Xavier Initialization, LabelSmoothing, Hyperparameter Tuning | [Prototype] <br> [Going Modular] |
 
 ---
 
