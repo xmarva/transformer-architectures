@@ -13,7 +13,7 @@ class DatasetFactory:
             raise ValueError(f"Failed to load dataset {name}: {str(e)}")
     
     @classmethod
-    def load_translation_dataset(cls, name: str = "Helsinki-NLP/tatoeba", lang1: str = "en", lang2: str = "ru") -> Dict:
+    def load_translation_dataset(cls, name: str = "Helsinki-NLP/tatoeba", trust_remote_code=True, lang1: str = "en", lang2: str = "ru") -> Dict:
         dataset = cls.load_dataset(name, lang1=lang1, lang2=lang2)
         return dataset
     
