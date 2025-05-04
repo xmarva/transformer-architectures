@@ -6,6 +6,7 @@ class DatasetFactory:
     @staticmethod
     @lru_cache(maxsize=10)
     def load_dataset(name: str, **kwargs) -> Dataset:
+        kwargs["trust_remote_code"] = True
         try:
             dataset = load_dataset(name, **kwargs)
             return dataset
