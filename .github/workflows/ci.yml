@@ -23,5 +23,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker run --rm transformer-ci \
+          docker run --rm \
+            -e WANDB_API_KEY=${{ secrets.WANDB_API_KEY }} \
+            transformer-ci \
             pytest -m "not gpu" /transformer-architectures/tests
