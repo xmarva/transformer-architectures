@@ -13,7 +13,8 @@ class TestIntegration:
                 "tgt": {"language": "ru", "vocab_size": 1000}
             },
             "collator_params": {"max_length": 50},
-            "pipeline_params": {"batch_size": 16}
+            "pipeline_params": {"batch_size": 16},
+            "dataset_params": {"trust_remote_code": True}
         }
         
         os.makedirs("src/configs", exist_ok=True)
