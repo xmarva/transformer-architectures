@@ -30,7 +30,7 @@ class TestDatasetFactory:
         
         result = DatasetFactory.load_translation_dataset()
         
-        mock_load_dataset.assert_called_once_with("Helsinki-NLP/tatoeba", lang1="en", lang2="ru")
+        mock_load_dataset.assert_called_once_with("Helsinki-NLP/tatoeba", lang1="en", lang2="ru", trust_remote_code=True)
         assert result == mock_dataset
     
     def test_preprocess_dataset(self):
