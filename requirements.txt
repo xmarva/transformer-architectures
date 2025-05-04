@@ -17,3 +17,4 @@ ipykernel==6.29.4
 nltk==3.2.4
 sentencepiece==0.2.0
 transformers==4.47.0
+pytest
